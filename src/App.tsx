@@ -8,36 +8,19 @@ import { Footer } from './components/Footer';
 
 export default function App() {
   const [activeSection, setActiveSection] = useState('home');
-  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
-    // Check for saved theme preference or default to light mode
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      setIsDark(true);
-    }
+    document.documentElement.classList.add('dark');
   }, []);
-
-  useEffect(() => {
-    // Update localStorage and document class when theme changes
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDark]);
 
   return (
     <Router>
       <div className="min-h-screen bg-neutral-50 dark:bg-neutral-900 text-neutral-900 dark:text-neutral-50 transition-colors">
-        <Navigation 
-          activeSection={activeSection} 
+        <Navigation
+          activeSection={activeSection}
           setActiveSection={setActiveSection}
-          isDark={isDark}
-          setIsDark={setIsDark}
         />
-        
+
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -45,7 +28,7 @@ export default function App() {
             <Route path="/music" element={<MusicPage />} />
           </Routes>
         </main>
-        
+
         <Footer />
       </div>
     </Router>
